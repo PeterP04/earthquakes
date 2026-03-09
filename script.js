@@ -97,7 +97,6 @@ map.on("click", "quake-points", (e) => {
     .setHTML(`
       <strong>${props.place}</strong><br>
       Magnitude: ${props.mag}<br>
-      Depth: ${depth} km<br>
       Time: ${date}<br>
       Significance: ${props.sig}<br>
       Community Intensity (CDI): ${props.cdi || "N/A"}<br>
