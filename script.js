@@ -89,7 +89,7 @@ map.on("click", "quake-points", (e) => {
   const depth = coords[2];
 
   // Convert timestamp to readable local date/time
-  const date = new Date(props.time).toUTCString();
+  const date = new Date(props.time).toLocaleString();
 
   // Display information in popup
   new mapboxgl.Popup()
