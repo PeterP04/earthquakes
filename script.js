@@ -1,9 +1,11 @@
+
 mapboxgl.accessToken = "pk.eyJ1IjoicGV0ZXJwaGFtMDQiLCJhIjoiY21pbzFvejF2MXo5ZzNkcTMxN3F3MHNxaSJ9.5D8AFre9XNsesLji025yKA";
 
+// Create the map
 const map = new mapboxgl.Map({
     container: "map",
     style: "mapbox://styles/mapbox/light-v11",
-    center: [-120, 37],
+    center: [-120, 37], // center on USA
     zoom: 2
 });
 
@@ -12,11 +14,13 @@ const dataURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/signi
 
 map.on("load", () => {
 
+    // Add GeoJSON source
     map.addSource("earthquakes", {
         type: "geojson",
         data: dataURL
     });
 
+    // Add circle layer for earthquakes
     map.addLayer({
         id: "quake-points",
         type: "circle",
@@ -35,7 +39,7 @@ map.on("load", () => {
         }
     });
 
-    // Add popups
+    // Add popups when clicking on a point
     map.on("click", "quake-points", (e) => {
         const coords = e.features[0].geometry.coordinates.slice();
         const mag = e.features[0].properties.mag;
@@ -47,12 +51,11 @@ map.on("load", () => {
             .addTo(map);
     });
 
-    // Change cursor to pointer
+    // Change cursor to pointer on hover
     map.on("mouseenter", "quake-points", () => {
         map.getCanvas().style.cursor = "pointer";
     });
     map.on("mouseleave", "quake-points", () => {
         map.getCanvas().style.cursor = "";
     });
-
 });
