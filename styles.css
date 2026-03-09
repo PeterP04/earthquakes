@@ -27,33 +27,41 @@ z-index:1;
 }
 
 #legend {
+  position: absolute;
+  bottom: 30px;
+  left: 10px;
+  background: rgba(255,255,255,0.95);
+  padding: 12px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  border-radius: 6px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.3);
+  max-width: 220px;
+}
 
-position:absolute;
-bottom:20px;
-left:10px;
-
-background:white;
-padding:10px;
-border-radius:6px;
-
-box-shadow:0 0 6px rgba(0,0,0,0.3);
-
+.legend-section {
+  margin-bottom: 10px;
 }
 
 .legend-item {
-
-display:flex;
-align-items:center;
-margin-bottom:4px;
-
+  display: flex;
+  align-items: center;
+  margin: 4px 0;
 }
 
-.legend-color {
+.legend-circle {
+  display: inline-block;
+  border-radius: 50%;
+  margin-right: 8px;
+  border: 1px solid #555;
+}
 
-width:14px;
-height:14px;
-margin-right:6px;
-
+.alert-box {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  margin-right: 8px;
+  border: 1px solid #555;
 }
 
 .low { background:#ffffb2; }
