@@ -88,7 +88,7 @@ map.on("click", "quake-points", (e) => {
   // Convert timestamp to readable local date/time
   const date = new Date(props.time).toLocaleString();
 
-  // Display information in popup
+  // Display information in pop-up
   new mapboxgl.Popup()
     .setLngLat([coords[0], coords[1]])
     .setHTML(`
