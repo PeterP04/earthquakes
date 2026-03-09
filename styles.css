@@ -1,1 +1,62 @@
+body {
+margin:0;
+font-family:Arial;
+}
 
+#map {
+position:absolute;
+top:0;
+bottom:0;
+width:100%;
+}
+
+#controls {
+
+position:absolute;
+top:10px;
+left:10px;
+
+background:white;
+padding:12px;
+border-radius:6px;
+
+box-shadow:0 0 6px rgba(0,0,0,0.3);
+
+z-index:1;
+
+}
+
+#legend {
+
+position:absolute;
+bottom:20px;
+left:10px;
+
+background:white;
+padding:10px;
+border-radius:6px;
+
+box-shadow:0 0 6px rgba(0,0,0,0.3);
+
+}
+
+.legend-item {
+
+display:flex;
+align-items:center;
+margin-bottom:4px;
+
+}
+
+.legend-color {
+
+width:14px;
+height:14px;
+margin-right:6px;
+
+}
+
+.low { background:#ffffb2; }
+.mid { background:#fecc5c; }
+.high { background:#fd8d3c; }
+.extreme { background:#e31a1c; }
