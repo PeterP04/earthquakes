@@ -94,39 +94,6 @@ Magnitude: ${p.mag}
 
 });
 
-const magSlider = document.getElementById("magSlider");
-const magValue = document.getElementById("magValue");
-
-magSlider.addEventListener("input", () => {
-
-magValue.textContent = magSlider.value;
-
-map.setFilter("quake-points", [
-"all",
-["!has", "point_count"],
-[">=", ["get", "mag"], Number(magSlider.value)]
-]);
-
-});
-
-const timeSlider = document.getElementById("timeSlider");
-const timeValue = document.getElementById("timeValue");
-
-timeSlider.addEventListener("input", () => {
-
-timeValue.textContent = timeSlider.value;
-
-const days = Number(timeSlider.value);
-const cutoff = Date.now() - days * 86400000;
-
-map.setFilter("quake-points", [
-"all",
-["!has", "point_count"],
-[">=", ["get", "time"], cutoff]
-]);
-
-});
-
 setInterval(() => {
 map.getSource("earthquakes").setData(dataURL);
 }, 300000);
