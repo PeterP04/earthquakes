@@ -1,61 +1,132 @@
-
 mapboxgl.accessToken = "pk.eyJ1IjoicGV0ZXJwaGFtMDQiLCJhIjoiY21pbzFvejF2MXo5ZzNkcTMxN3F3MHNxaSJ9.5D8AFre9XNsesLji025yKA";
 
-// Create the map
 const map = new mapboxgl.Map({
-    container: "map",
-    style: "mapbox://styles/mapbox/light-v11",
-    center: [-120, 37], // center on USA
-    zoom: 2
+container: "map",
+style: "mapbox://styles/mapbox/light-v11",
+center: [-100, 40],
+zoom: 2
 });
 
-// USGS significant earthquakes past month feed
-const dataURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/significant_month.geojson";
+const dataURL =
+"https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
 map.on("load", () => {
 
-    // Add GeoJSON source
-    map.addSource("earthquakes", {
-        type: "geojson",
-        data: dataURL
-    });
-
-    // Add circle layer for earthquakes
-    map.addLayer({
-        id: "quake-points",
-        type: "circle",
-        source: "earthquakes",
-        paint: {
-            "circle-color": "#ff5722",
-            "circle-radius": [
-                "interpolate",
-                ["linear"],
-                ["get", "mag"],
-                1, 4,
-                6, 12
-            ],
-            "circle-stroke-color": "#fff",
-            "circle-stroke-width": 1
-        }
-    });
-
-    // Add popups when clicking on a point
-    map.on("click", "quake-points", (e) => {
-        const coords = e.features[0].geometry.coordinates.slice();
-        const mag = e.features[0].properties.mag;
-        const place = e.features[0].properties.place;
-
-        new mapboxgl.Popup()
-            .setLngLat([coords[0], coords[1]])
-            .setHTML(`<strong>${place}</strong><br>Magnitude: ${mag}`)
-            .addTo(map);
-    });
-
-    // Change cursor to pointer on hover
-    map.on("mouseenter", "quake-points", () => {
-        map.getCanvas().style.cursor = "pointer";
-    });
-    map.on("mouseleave", "quake-points", () => {
-        map.getCanvas().style.cursor = "";
-    });
+map.addSource("earthquakes", {
+type: "geojson",
+data: dataURL,
+cluster: true,
+clusterMaxZoom: 6,
+clusterRadius: 50
 });
+
+map.addLayer({
+id: "clusters",
+type: "circle",
+source: "earthquakes",
+filter: ["has", "point_count"],
+paint: {
+"circle-color": "#51bbd6",
+"circle-radius": [
+"step",
+["get", "point_count"],
+20,
+100, 30,
+750, 40
+]
+}
+});
+
+map.addLayer({
+id: "cluster-count",
+type: "symbol",
+source: "earthquakes",
+filter: ["has", "point_count"],
+layout: {
+"text-field": ["get", "point_count_abbreviated"],
+"text-size": 12
+}
+});
+
+map.addLayer({
+id: "quake-points",
+type: "circle",
+source: "earthquakes",
+filter: ["!has", "point_count"],
+paint: {
+
+"circle-radius": [
+"interpolate",
+["linear"],
+["get", "mag"],
+0, 4,
+6, 16
+],
+
+"circle-color": [
+"interpolate",
+["linear"],
+["get", "mag"],
+0, "#ffffb2",
+2, "#fecc5c",
+4, "#fd8d3c",
+6, "#e31a1c"
+],
+
+"circle-opacity": 0.8
+
+}
+});
+
+});
+
+map.on("click", "quake-points", (e) => {
+
+const p = e.features[0].properties;
+
+new mapboxgl.Popup()
+.setLngLat(e.lngLat)
+.setHTML(`
+<strong>${p.place}</strong><br>
+Magnitude: ${p.mag}
+`)
+.addTo(map);
+
+});
+
+const magSlider = document.getElementById("magSlider");
+const magValue = document.getElementById("magValue");
+
+magSlider.addEventListener("input", () => {
+
+magValue.textContent = magSlider.value;
+
+map.setFilter("quake-points", [
+"all",
+["!has", "point_count"],
+[">=", ["get", "mag"], Number(magSlider.value)]
+]);
+
+});
+
+const timeSlider = document.getElementById("timeSlider");
+const timeValue = document.getElementById("timeValue");
+
+timeSlider.addEventListener("input", () => {
+
+timeValue.textContent = timeSlider.value;
+
+const days = Number(timeSlider.value);
+const cutoff = Date.now() - days * 86400000;
+
+map.setFilter("quake-points", [
+"all",
+["!has", "point_count"],
+[">=", ["get", "time"], cutoff]
+]);
+
+});
+
+setInterval(() => {
+map.getSource("earthquakes").setData(dataURL);
+}, 300000);
