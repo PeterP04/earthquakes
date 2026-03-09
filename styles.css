@@ -1,62 +1,44 @@
 body {
-margin:0;
-font-family:Arial;
+  margin: 0;
+  font-family: Arial, sans-serif;
 }
 
 #map {
-position:absolute;
-top:0;
-bottom:0;
-width:100%;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
 }
 
-#controls {
-
-position:absolute;
-top:10px;
-left:10px;
-
-background:white;
-padding:12px;
-border-radius:6px;
-
-box-shadow:0 0 6px rgba(0,0,0,0.3);
-
-z-index:1;
-
+#sidebar {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  width: 220px;
+  background: white;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 0 6px rgba(0,0,0,0.3);
+  z-index: 1;
 }
 
-#legend {
-
-position:absolute;
-bottom:20px;
-left:10px;
-
-background:white;
-padding:10px;
-border-radius:6px;
-
-box-shadow:0 0 6px rgba(0,0,0,0.3);
-
+.legend {
+  margin-top: 10px;
 }
 
-.legend-item {
-
-display:flex;
-align-items:center;
-margin-bottom:4px;
-
+.legend div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 4px;
 }
 
-.legend-color {
-
-width:14px;
-height:14px;
-margin-right:6px;
-
+.dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  margin-right: 6px;
 }
 
-.low { background:#ffffb2; }
-.mid { background:#fecc5c; }
-.high { background:#fd8d3c; }
-.extreme { background:#e31a1c; }
+.dot.small { background: #2DC4B2; }
+.dot.medium { background: #3BB3C3; }
+.dot.large { background: #669EC4; }
