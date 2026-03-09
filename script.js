@@ -81,17 +81,30 @@ paint: {
 });
 
 map.on("click", "quake-points", (e) => {
+  const feature = e.features[0];
+  const coords = feature.geometry.coordinates.slice();
+  const props = feature.properties;
 
-const p = e.features[0].properties;
+  // Depth is the third coordinate
+  const depth = coords[2];
 
-new mapboxgl.Popup()
-.setLngLat(e.lngLat)
-.setHTML(`
-<strong>${p.place}</strong><br>
-Magnitude: ${p.mag}
-`)
-.addTo(map);
+  // Convert timestamp to readable local date/time
+  const date = new Date(props.time).toLocaleString();
 
+  // Display information in popup
+  new mapboxgl.Popup()
+    .setLngLat([coords[0], coords[1]])
+    .setHTML(`
+      <strong>${props.place}</strong><br>
+      Magnitude: ${props.mag}<br>
+      Depth: ${depth} km<br>
+      Time: ${date}<br>
+      Significance: ${props.sig}<br>
+      Community Intensity (CDI): ${props.cdi || "N/A"}<br>
+      Alert Level: ${props.alert || "N/A"}<br>
+      <a href="${props.url}" target="_blank">USGS Event Page</a>
+    `)
+    .addTo(map);
 });
 
 setInterval(() => {
