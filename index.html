@@ -1,60 +1,46 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-<meta charset="UTF-8">
+<meta charset="utf-8">
 <title>Earthquake Dashboard</title>
 
-<link rel="stylesheet" href="styles.css">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css" rel="stylesheet">
+<link href="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.css" rel="stylesheet">
 
-<script src="https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js"></script>
+<link rel="stylesheet" href="style.css">
 
 </head>
 
 <body>
 
-<div id="map"></div>
+<div id="sidebar">
 
-<div id="controls">
+<h2>Earthquake Dashboard</h2>
 
-<h3>Earthquake Filters</h3>
-
-<label>Minimum Magnitude</label><br>
-<input type="range" id="magSlider" min="0" max="8" step="0.5" value="0">
-<span id="magValue">0</span>
+<label>Minimum Magnitude</label>
+<input type="range" id="magSlider" min="0" max="10" step="0.1" value="4">
+<span id="magValue">4</span>
 
 <br><br>
 
-<label>Days Back</label><br>
-<input type="range" id="timeSlider" min="1" max="30" value="30">
-<span id="timeValue">30</span>
+<label>Time Range (Hours)</label>
+<input type="range" id="timeSlider" min="1" max="720" step="1" value="720">
+<span id="timeValue">720</span>
 
-</div>
+<h3>Legend</h3>
 
-<div id="legend">
-
-<b>Magnitude</b>
-
-<div class="legend-item">
-<div class="legend-color low"></div>0–2
-</div>
-
-<div class="legend-item">
-<div class="legend-color mid"></div>2–4
-</div>
-
-<div class="legend-item">
-<div class="legend-color high"></div>4–6
-</div>
-
-<div class="legend-item">
-<div class="legend-color extreme"></div>6+
+<div class="legend">
+<div><span class="dot small"></span> Small</div>
+<div><span class="dot medium"></span> Medium</div>
+<div><span class="dot large"></span> Large</div>
 </div>
 
 </div>
 
+<div id="map"></div>
+
+<script src="https://api.mapbox.com/mapbox-gl-js/v3.2.0/mapbox-gl.js"></script>
 <script src="script.js"></script>
 
 </body>
