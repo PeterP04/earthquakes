@@ -18,25 +18,51 @@
 <div id="map"></div>
 
 <div id="legend">
+  <h3>Earthquake Legend</h3>
 
-<b>Magnitude</b>
+  <!-- Magnitude -->
+  <div class="legend-section">
+    <b>Magnitude</b>
+    <div class="legend-item">
+      <span class="legend-circle" style="background:#ffffb2; width:10px; height:10px;"></span>0–2
+    </div>
+    <div class="legend-item">
+      <span class="legend-circle" style="background:#fecc5c; width:12px; height:12px;"></span>2–4
+    </div>
+    <div class="legend-item">
+      <span class="legend-circle" style="background:#fd8d3c; width:16px; height:16px;"></span>4–6
+    </div>
+    <div class="legend-item">
+      <span class="legend-circle" style="background:#e31a1c; width:20px; height:20px;"></span>6+
+    </div>
+  </div>
 
-<div class="legend-item">
-<div class="legend-color low"></div>0–2
-</div>
+  <!-- Significance -->
+  <div class="legend-section">
+    <b>Significance (sig)</b>
+    <p>A numeric measure of the earthquake’s overall impact (higher = more significant).</p>
+  </div>
 
-<div class="legend-item">
-<div class="legend-color mid"></div>2–4
-</div>
+  <!-- Community Intensity -->
+  <div class="legend-section">
+    <b>Community Intensity (CDI)</b>
+    <p>Based on felt reports by people in the area (scale 1–10). N/A if not reported.</p>
+  </div>
 
-<div class="legend-item">
-<div class="legend-color high"></div>4–6
-</div>
-
-<div class="legend-item">
-<div class="legend-color extreme"></div>6+
-</div>
-
+  <!-- Alert Level -->
+  <div class="legend-section">
+    <b>Alert Level</b>
+    <div class="legend-item">
+      <span class="alert-box" style="background:green;"></span>Green – Low alert
+    </div>
+    <div class="legend-item">
+      <span class="alert-box" style="background:yellow;"></span>Yellow – Moderate alert
+    </div>
+    <div class="legend-item">
+      <span class="alert-box" style="background:red;"></span>Red – High alert
+    </div>
+    <p>Displayed only for earthquakes meeting USGS warning criteria.</p>
+  </div>
 </div>
 
 <script src="script.js"></script>
