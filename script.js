@@ -85,9 +85,6 @@ map.on("click", "quake-points", (e) => {
   const coords = feature.geometry.coordinates.slice();
   const props = feature.properties;
 
-  // Depth is the third coordinate
-  const depth = coords[2];
-
   // Convert timestamp to readable local date/time
   const date = new Date(props.time).toLocaleString();
 
