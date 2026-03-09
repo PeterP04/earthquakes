@@ -10,6 +10,9 @@ zoom: 2
 const dataURL =
 "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson";
 
+let minMag = 0;
+let daysBack = 30;
+
 map.on("load", () => {
 
 map.addSource("earthquakes", {
@@ -78,7 +81,22 @@ paint: {
 }
 });
 
+updateFilters();
+
 });
+
+function updateFilters(){
+
+const cutoff = Date.now() - daysBack * 86400000;
+
+map.setFilter("quake-points", [
+"all",
+["!has", "point_count"],
+[">=", ["get", "mag"], minMag],
+[">=", ["get", "time"], cutoff]
+]);
+
+}
 
 map.on("click", "quake-points", (e) => {
 
@@ -99,13 +117,10 @@ const magValue = document.getElementById("magValue");
 
 magSlider.addEventListener("input", () => {
 
-magValue.textContent = magSlider.value;
+minMag = Number(magSlider.value);
+magValue.textContent = minMag;
 
-map.setFilter("quake-points", [
-"all",
-["!has", "point_count"],
-[">=", ["get", "mag"], Number(magSlider.value)]
-]);
+updateFilters();
 
 });
 
@@ -114,19 +129,15 @@ const timeValue = document.getElementById("timeValue");
 
 timeSlider.addEventListener("input", () => {
 
-timeValue.textContent = timeSlider.value;
+daysBack = Number(timeSlider.value);
+timeValue.textContent = daysBack;
 
-const days = Number(timeSlider.value);
-const cutoff = Date.now() - days * 86400000;
-
-map.setFilter("quake-points", [
-"all",
-["!has", "point_count"],
-[">=", ["get", "time"], cutoff]
-]);
+updateFilters();
 
 });
 
 setInterval(() => {
+
 map.getSource("earthquakes").setData(dataURL);
+
 }, 300000);
